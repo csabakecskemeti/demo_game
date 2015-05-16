@@ -2,7 +2,6 @@ package com.kecsogdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -36,6 +35,8 @@ public class KecsoGdxGamePlay implements ApplicationListener {
     private Array<Rectangle> creatives;
     private int points = 0;
     private BitmapFont font;
+    private int creativeSpeed = 200;
+    private int dropSpeed = 200;
 
 	@Override
 	public void create() {
@@ -121,24 +122,26 @@ public class KecsoGdxGamePlay implements ApplicationListener {
         Iterator<Rectangle> iter = raindrops.iterator();
         while(iter.hasNext()) {
             Rectangle raindrop = iter.next();
-            raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
+            raindrop.y -= dropSpeed * Gdx.graphics.getDeltaTime();
             if(raindrop.y + dropImage.getHeight() < 0) iter.remove();
             if(raindrop.overlaps(bucket)) {
                 dropSound.play();
                 iter.remove();
                 points ++;
+                dropSpeed += 1;
             }
         }
 
         Iterator<Rectangle> iter2 = creatives.iterator();
         while (iter2.hasNext()) {
             Rectangle creative = iter2.next();
-            creative.y -= 200 * Gdx.graphics.getDeltaTime();
+            creative.y -= creativeSpeed * Gdx.graphics.getDeltaTime();
             if (creative.y + creativeImage.getHeight() < 0) iter2.remove();
             if (creative.overlaps(bucket)) {
                 creativeSound.play();
                 iter2.remove();
                 points += 10;
+                creativeSpeed += 10;
             }
         }
     }
@@ -163,6 +166,7 @@ public class KecsoGdxGamePlay implements ApplicationListener {
         rainMusic.dispose();
         batch.dispose();
         font.dispose();
+        points = 0;
     }
 
     private void spawnRainDrop() {
