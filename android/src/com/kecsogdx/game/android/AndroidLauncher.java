@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.kecsogdx.game.KecsoGdxGamePlay;
+import com.kecsogdx.game.KecsoGdxGame;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -14,5 +15,6 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = false;
 		config.useCompass = false;
 		initialize(new KecsoGdxGamePlay(), config);
+//        initialize(new KecsoGdxGame(), config);
 	}
 }
